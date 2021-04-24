@@ -9,30 +9,38 @@ import {
   Route,
   Link
 } from "react-router-dom";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   return (
     <div className="App">
-      <span>
-        <img src="/images/mountain.jpeg" alt="" />
-      </span>
-      <span>
-        <Router>
-          <Link to="login" >Login</Link>
-          <Link to="list" >List</Link>
-          <Switch>
-            <Route path="/login">
-              <Login />
-            </Route>
-            <Route path="/list">
-              <List />
-            </Route>
-            <Route path="/">
-              <Registration />
-            </Route>
-          </Switch>
-        </Router>
-      </span>
+      <div className="container">
+        <div className="row">
+            <div className="col-md-6">
+              <img className="image" src="/images/mountain.jpeg" alt="" />
+            </div>
+            <div className="col-md-6">
+            <Router>
+              <Link to="registration">Registration</Link>
+              <Link to="login">Login</Link>
+              <Switch>
+                  <Route path="/registration">
+                      <Registration />
+                  </Route>
+                  <Route path="/login">
+                      <Login />
+                  </Route>
+                  <Route path="/list">
+                      <List />
+                  </Route>
+                  <Route path="/">
+                      <Registration />
+                  </Route>
+              </Switch>
+            </Router>
+            </div>
+        </div>
+      </div>
     </div>
   );
 }

@@ -5,10 +5,18 @@ class Registration extends React.Component {
         super();
         this.state = {
             data: null,
+            hasAccess: false,
         }
     }
     componentDidMount() {
-        this.fetchUsers();
+        this.checkAccess();
+    }
+    checkAccess(){
+        const hasAccess = localStorage.getItem("loginAccess");
+        if (hasAccess) {
+            this.setState({ hasAccess });
+            this.fetchUsers();
+        }
     }
     fetchUsers(){
         fetch('http://localhost:8000/users', {
@@ -36,24 +44,36 @@ class Registration extends React.Component {
         })
     }
     render() {
+        console.info(this.state.data);
         return (
-            <div>
-                Users List
-                <br /><br />
-                <div>
-                {
-                    this.state.data ?
-                    this.state.data.map((user)=>
-                    <div>
-                        <span> Name: {user.name} </span>
-                        <span> Mobile: {user.mobile ? user.mobile : '-'} </span>
-                        <span> Email Id: {user.email} </span>
-                        <span> <button onClick={()=> this.Delete(user)}> Delete </button> </span>
-                    </div>
-                    ) : null
-                }
+            !this.state.hasAccess ? (
+                <div className="mt-50">
+                    Please Login to check Users List
                 </div>
-            </div>
+            ) : (
+                <table className="table mt-50">
+                    <thead>
+                        <tr>
+                        <th>Name</th>
+                        <th>Mobile</th>
+                        <th>Email Id</th>
+                        <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {this.state.data ?
+                        this.state.data.map((user)=>
+                            <tr>
+                                <td>{user.name} </td>
+                                <td>{user.mobile ? user.mobile : '-'} </td>
+                                <td>{user.email} </td>
+                                <td> <button onClick={()=> this.Delete(user)}> Delete </button> </td>
+                            </tr>
+                        ) : null
+                    }
+                    </tbody>
+                    </table>
+            ) 
         );
     }
 }

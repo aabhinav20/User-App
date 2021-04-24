@@ -22,9 +22,9 @@ class Registration extends React.Component {
     }
     render() {
         return (
-            <div>
-                Registration
-                <br /><br />
+            <div className="mt-50">
+                <h3>Registration</h3>
+                <br />
                 <div>
                     <input
                         type="text"
